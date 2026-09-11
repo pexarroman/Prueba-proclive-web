@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestros profesionales | Prolive Valdebebas Norte</title>
+<meta id="meta-description" name="description" content="Conoce al equipo de fisioterapeutas de Prolive Valdebebas: suelo pélvico, pediátrica, deportiva, dermatofuncional y pilates.">
+<meta name="theme-color" content="#0d9488">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Lucide Icons (defer: no bloquea el pintado de la página) -->
+<script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+<!-- ============================================================ -->
+<!-- DATOS DEL CLIENTE: nombre, contacto, colores, textos, equipo  -->
+<!-- Todo lo específico del negocio vive en config.js, NO aquí.    -->
+<!-- app.js es la lógica, compartida por las tres páginas.         -->
+<!-- ============================================================ -->
+<script defer src="config.js"></script>
+<script defer src="app.js"></script>
+
+<style>
+  :root{
+    --color-primary: #0d9488;
+    --color-primary-dark: #0f766e;
+    --color-secondary: #1e293b;
+  }
+  body{ font-family:'Inter', sans-serif; }
+  h1,h2,h3,h4,.font-heading{ font-family:'Poppins', sans-serif; }
+  .text-primary{ color: var(--color-primary); }
+  .bg-primary{ background-color: var(--color-primary); }
+  .bg-primary-dark{ background-color: var(--color-primary-dark); }
+  .border-primary{ border-color: var(--color-primary); }
+  .hover\:bg-primary-dark:hover{ background-color: var(--color-primary-dark); }
+  .bg-secondary{ background-color: var(--color-secondary); }
+  .text-secondary{ color: var(--color-secondary); }
+  .hero-gradient{
+    background: radial-gradient(circle at 25% 15%, rgba(13,148,136,0.16), transparent 55%),
+                radial-gradient(circle at 85% 85%, rgba(30,41,59,0.08), transparent 50%);
+  }
+  .placeholder-img{
+    background: linear-gradient(135deg, rgba(13,148,136,0.18), rgba(30,41,59,0.12));
+  }
+  #mobile-menu{ transition: max-height .3s ease, opacity .25s ease; }
+  .modal-overlay{ backdrop-filter: blur(3px); }
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:#f1f5f9; }
+  ::-webkit-scrollbar-thumb{ background:#cbd5e1; border-radius:8px; }
+
+  /* ---------- Aparición suave al hacer scroll (IntersectionObserver en app.js) ---------- */
+  .reveal{
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+
+<body class="bg-white text-slate-700 antialiased" data-own-meta>
+
+<!-- ============ NAVBAR (idéntica en las 3 páginas) ============ -->
+<header id="navbar" class="fixed top-0 inset-x-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100 transition-shadow">
+  <nav class="max-w-7xl mx-auto px-5 sm:px-8 h-18 py-3 flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-2.5 font-heading font-bold text-xl text-secondary flex-shrink-0">
+      <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-primary overflow-hidden flex-shrink-0">
+        <img id="brand-logo-header" src="" alt="" class="hidden w-full h-full object-contain p-1">
+        <i id="brand-icon-header" data-lucide="activity" class="w-6 h-6"></i>
+      </span>
+      <span class="flex flex-col leading-none">
+        <span id="brand-name-header"></span>
+        <span id="brand-tagline-header" class="text-[11px] font-medium text-slate-400 tracking-wide mt-0.5"></span>
+      </span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+      <a href="index.html" class="hover:text-primary transition-colors">Inicio</a>
+      <a href="videos.html" class="hover:text-primary transition-colors">Vídeos</a>
+      <a href="profesionales.html" class="text-primary font-semibold">Nuestros profesionales</a>
+    </div>
+
+    <div class="flex items-center gap-3 flex-shrink-0">
+      <a id="phone-link-header" href="tel:" class="hidden lg:inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:text-primary transition-colors">
+        <i data-lucide="phone" class="w-4 h-4"></i> <span id="phone-text-header"></span>
+      </a>
+      <a data-booking href="#"
+         class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-4 py-2.5 rounded-full shadow-sm transition-colors">
+        <i data-lucide="calendar-check" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Reservar Cita</span>
+        <span class="sm:hidden">Reservar</span>
+      </a>
+      <button id="menu-btn" aria-label="Abrir menú" aria-expanded="false" class="md:hidden flex items-center justify-center w-10 h-10 rounded-lg text-secondary hover:bg-slate-100">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div id="mobile-menu" class="md:hidden max-h-0 overflow-hidden opacity-0 bg-white border-t border-slate-100">
+    <div class="flex flex-col px-6 py-4 gap-1 text-slate-600 font-medium">
+      <a href="index.html" class="py-2.5 border-b border-slate-50 hover:text-primary transition-colors">Inicio</a>
+      <a href="videos.html" class="py-2.5 border-b border-slate-50 hover:text-primary transition-colors">Vídeos</a>
+      <a href="profesionales.html" class="py-2.5 text-primary font-semibold">Nuestros profesionales</a>
+    </div>
+  </div>
+</header>
+
+<main class="pt-18">
+
+<!-- ============ CABECERA ============ -->
+<section class="hero-gradient py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 grid lg:grid-cols-2 gap-12 items-center">
+    <div class="reveal">
+      <span id="team-eyebrow" class="text-primary font-semibold text-sm uppercase tracking-wider"></span>
+      <h1 id="team-heading" class="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold text-secondary mt-3 mb-5 leading-tight"></h1>
+      <p id="team-description" class="text-lg text-slate-500 max-w-xl"></p>
+      <div class="flex flex-wrap gap-4 mt-8">
+        <a data-booking href="#"
+           class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3.5 rounded-full shadow-lg transition-colors">
+          <i data-lucide="calendar-check" class="w-5 h-5"></i> Reservar Cita
+        </a>
+        <a href="index.html#planes"
+           class="inline-flex items-center gap-2 bg-white border border-slate-200 hover:border-primary hover:text-primary text-secondary font-semibold px-6 py-3.5 rounded-full transition-colors">
+          <i data-lucide="tag" class="w-5 h-5"></i> Ver tarifas
+        </a>
+      </div>
+    </div>
+    <div class="reveal placeholder-img aspect-[16/10] w-full rounded-3xl overflow-hidden border border-slate-100 shadow-lg relative">
+      <img id="team-hero-image" src="" alt="" class="hidden absolute inset-0 w-full h-full object-cover">
+      <div id="team-hero-placeholder" class="absolute inset-0 flex flex-col items-center justify-center gap-3">
+        <i data-lucide="users" class="w-14 h-14 text-slate-400"></i>
+        <p class="text-sm text-slate-400 font-medium px-8 text-center">Foto de grupo del equipo (images/equipo.jpg)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REJILLA DEL EQUIPO: 3 por fila en escritorio ============ -->
+<section id="equipo" class="py-16 md:py-24 bg-white">
+  <div id="team-grid" class="max-w-7xl mx-auto px-5 sm:px-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
+    <!-- Generado desde config.js (CFG.team). Con 6 personas salen 2 filas de 3. -->
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="py-16 md:py-20 bg-secondary text-center">
+  <div class="reveal max-w-2xl mx-auto px-5 sm:px-8">
+    <h2 class="font-heading text-2xl sm:text-3xl font-bold text-white mb-4">¿No sabes con quién pedir cita?</h2>
+    <p class="text-slate-300 mb-8">Escríbenos y te asignamos al profesional que mejor encaja con tu caso.</p>
+    <div class="flex flex-wrap gap-3 justify-center">
+      <a data-booking href="#"
+         class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-7 py-3.5 rounded-full transition-colors">
+        <i data-lucide="calendar-check" class="w-5 h-5"></i> Reservar cita
+      </a>
+      <a href="index.html#contacto"
+         class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold px-7 py-3.5 rounded-full transition-colors">
+        <i data-lucide="message-circle" class="w-5 h-5"></i> Contactar
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER (idéntico en las 3 páginas) ============ -->
+<footer class="bg-slate-950 text-slate-400 py-14">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-10 pb-10 border-b border-white/10">
+      <div class="md:col-span-2">
+        <a href="index.html" class="flex items-center gap-2.5 font-heading font-bold text-lg text-white mb-4">
+          <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-primary/20 text-primary overflow-hidden">
+            <img id="brand-logo-footer" src="" alt="" class="hidden w-full h-full object-contain p-1">
+            <i id="brand-icon-footer" data-lucide="activity" class="w-5 h-5"></i>
+          </span>
+          <span id="brand-name-footer"></span>
+        </a>
+        <p id="footer-description" class="text-sm max-w-sm"></p>
+        <div class="flex items-center gap-3 mt-5">
+          <a id="instagram-footer" href="#" target="_blank" rel="noopener" aria-label="Instagram"
+             class="hidden items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-primary text-slate-300 hover:text-white transition-colors">
+            <i data-lucide="instagram" class="w-5 h-5"></i>
+          </a>
+          <a id="facebook-footer" href="#" target="_blank" rel="noopener" aria-label="Facebook"
+             class="hidden items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-primary text-slate-300 hover:text-white transition-colors">
+            <i data-lucide="facebook" class="w-5 h-5"></i>
+          </a>
+        </div>
+      </div>
+      <div>
+        <p class="text-white font-semibold text-sm mb-4">Navegación</p>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="index.html" class="hover:text-white transition-colors">Inicio</a></li>
+          <li><a href="videos.html" class="hover:text-white transition-colors">Vídeos</a></li>
+          <li><a href="profesionales.html" class="hover:text-white transition-colors">Nuestros profesionales</a></li>
+          <li><a href="index.html#planes" class="hover:text-white transition-colors">Tarifas</a></li>
+          <li><a href="index.html#contacto" class="hover:text-white transition-colors">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-white font-semibold text-sm mb-4">Contacto</p>
+        <ul class="space-y-2.5 text-sm">
+          <li id="footer-address"></li>
+          <li><a id="footer-phone" href="tel:" class="hover:text-white transition-colors"></a></li>
+          <li><a id="footer-email" href="mailto:" class="hover:text-white transition-colors break-all"></a></li>
+        </ul>
+        <p class="text-white font-semibold text-sm mt-6 mb-3">Legal</p>
+        <ul class="space-y-2.5 text-sm">
+          <li><button data-modal="modal-aviso-legal" class="hover:text-white transition-colors text-left">Aviso Legal</button></li>
+          <li><button data-modal="modal-privacidad" class="hover:text-white transition-colors text-left">Política de Privacidad</button></li>
+          <li><button data-modal="modal-cookies" class="hover:text-white transition-colors text-left">Política de Cookies</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
+      <p>&copy; <span id="year"></span> <span id="footer-copyright-name"></span>. Todos los derechos reservados.</p>
+      <p id="footer-nif"></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ BANNER DE COOKIES ============ -->
+<div id="cookie-banner" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="max-w-5xl mx-auto m-4 bg-white border border-slate-200 rounded-2xl shadow-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+    <i data-lucide="cookie" class="w-8 h-8 text-primary flex-shrink-0"></i>
+    <p class="text-sm text-slate-600 flex-1">
+      Utilizamos cookies propias y de terceros para mejorar tu experiencia de navegación y analizar el uso de la web.
+      Puedes aceptarlas, rechazarlas o consultar más información en nuestra
+      <button data-modal="modal-cookies" class="text-primary font-semibold underline underline-offset-2">Política de Cookies</button>.
+    </p>
+    <div class="flex gap-3 flex-shrink-0 w-full sm:w-auto">
+      <button id="cookie-reject" class="flex-1 sm:flex-none px-5 py-2.5 rounded-full border border-slate-200 text-slate-600 text-sm font-semibold hover:bg-slate-50 transition-colors">Rechazar</button>
+      <button id="cookie-accept" class="flex-1 sm:flex-none px-5 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-colors">Aceptar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODALES ============ -->
+<!-- El contenido de los tres modales legales se genera desde config.js (ver app.js) -->
+
+<div id="modal-aviso-legal" class="legal-modal fixed inset-0 z-[60] hidden items-center justify-center p-4">
+  <div class="modal-overlay absolute inset-0 bg-slate-900/60" data-close-modal></div>
+  <div class="relative bg-white w-full max-w-2xl max-h-[85vh] rounded-2xl shadow-2xl flex flex-col">
+    <div class="flex items-center justify-between px-6 py-5 border-b border-slate-100">
+      <h2 class="font-heading font-bold text-xl text-secondary">Aviso Legal</h2>
+      <button data-close-modal class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-secondary transition-colors" aria-label="Cerrar">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div id="modal-aviso-legal-body" class="px-6 py-5 overflow-y-auto text-sm text-slate-600 leading-relaxed space-y-4"></div>
+  </div>
+</div>
+
+<div id="modal-privacidad" class="legal-modal fixed inset-0 z-[60] hidden items-center justify-center p-4">
+  <div class="modal-overlay absolute inset-0 bg-slate-900/60" data-close-modal></div>
+  <div class="relative bg-white w-full max-w-2xl max-h-[85vh] rounded-2xl shadow-2xl flex flex-col">
+    <div class="flex items-center justify-between px-6 py-5 border-b border-slate-100">
+      <h2 class="font-heading font-bold text-xl text-secondary">Política de Privacidad</h2>
+      <button data-close-modal class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-secondary transition-colors" aria-label="Cerrar">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div id="modal-privacidad-body" class="px-6 py-5 overflow-y-auto text-sm text-slate-600 leading-relaxed space-y-4"></div>
+  </div>
+</div>
+
+<div id="modal-cookies" class="legal-modal fixed inset-0 z-[60] hidden items-center justify-center p-4">
+  <div class="modal-overlay absolute inset-0 bg-slate-900/60" data-close-modal></div>
+  <div class="relative bg-white w-full max-w-2xl max-h-[85vh] rounded-2xl shadow-2xl flex flex-col">
+    <div class="flex items-center justify-between px-6 py-5 border-b border-slate-100">
+      <h2 class="font-heading font-bold text-xl text-secondary">Política de Cookies</h2>
+      <button data-close-modal class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-secondary transition-colors" aria-label="Cerrar">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div id="modal-cookies-body" class="px-6 py-5 overflow-y-auto text-sm text-slate-600 leading-relaxed space-y-4"></div>
+  </div>
+</div>
+
+<!-- Reservar cita (Cal.com). Solo se usa si config.js tiene booking.calLink -->
+<div id="modal-reservar" class="legal-modal fixed inset-0 z-[60] hidden items-center justify-center p-4">
+  <div class="modal-overlay absolute inset-0 bg-slate-900/60" data-close-modal></div>
+  <div class="relative bg-white w-full max-w-3xl max-h-[85vh] rounded-2xl shadow-2xl flex flex-col">
+    <div class="flex items-center justify-between px-6 py-5 border-b border-slate-100">
+      <h2 class="font-heading font-bold text-xl text-secondary">Reserva tu cita</h2>
+      <button data-close-modal class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-secondary transition-colors" aria-label="Cerrar">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div id="cal-booking-container" class="overflow-y-auto flex-1" style="min-height:500px;"></div>
+  </div>
+</div>
+
+</body>
+</html>
